@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<title>الحزم والأسعار</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+  color:#1b5e20;
+}
+
+.header{
+  background:linear-gradient(90deg,#1b5e20,#2e7d32);
+  color:white;
+  text-align:center;
+  padding:25px;
+  font-size:30px;
+  font-weight:bold;
+}
+
+.section{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.section h2{
+  font-size:32px;
+  margin-bottom:40px;
+}
+
+.packages{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 18px 35px rgba(0,0,0,0.25);
+}
+
+/* ===== صورة / أيقونة ===== */
+.icon{
+  font-size:60px;
+  margin-bottom:15px;
+  display:inline-block;
+  transition:0.4s;
+}
+
+.card:hover .icon{
+  transform:scale(1.2) rotate(5deg);
+}
+
+/* ===== تكبير عند المرور ===== */
+.icon:hover{
+  transform:scale(1.3);
+}
+
+.card h3{
+  font-size:24px;
+  margin-bottom:15px;
+}
+
+.card ul{
+  list-style:none;
+  text-align:right;
+  line-height:2;
+  margin-bottom:20px;
+}
+
+.card ul li::before{
+  content:"✔ ";
+  color:#2e7d32;
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+button{
+  background:#2e7d32;
+  color:white;
+  border:none;
+  padding:12px 25px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#6d4c41;
+}
+
+/* ===== إطار متحرك للحزمة المميزة ===== */
+.highlight{
+  position:relative;
+  z-index:1;
+}
+
+.highlight::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:22px;
+  padding:3px;
+  background:linear-gradient(45deg,#1b5e20,#66bb6a,#1b5e20);
+  background-size:300% 300%;
+  animation:glow 4s linear infinite;
+  z-index:-1;
+}
+
+@keyframes glow{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.custom-box{
+  margin-top:60px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  max-width:800px;
+  margin-inline:auto;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.close{
+  margin-top:15px;
+  background:#c62828;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-button-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(145deg, #1e5e2c, #0f401d);
+    padding: 14px 28px 14px 22px;
+    border-radius: 80px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    border: 2px solid #d4f2c7;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    animation: subtle-pulse 2.5s infinite ease-in-out;
+}
+
+/* صورة الكلب - باستخدام أيقونة + تصميم يشبه الوجه */
+.dog-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9e05e;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+    position: relative;
+    transition: 0.3s;
+}
+
+.dog-icon-wrapper i {
+    font-size: 2.4rem;
+    color: #4a2f0d;
+    transform: scaleX(-1);
+    filter: drop-shadow(2px 2px 0 #a56711);
+}
+
+/* أذن الكلب (إضافة تفصيل ظريف) */
+.dog-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: #f9e05e;
+    border-radius: 80% 0 40% 40%;
+    transform: rotate(-15deg);
+    box-shadow: -2px -2px 0 #a56b1a;
+    border: 2px solid #a56b1a;
+}
+
+.dog-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -2px;
+    width: 16px;
+    height: 16px;
+    background: #f9e05e;
+    border-radius: 0 80% 40% 40%;
+    transform: rotate(15deg);
+    box-shadow: 2px -2px 0 #a56b1a;
+    border: 2px solid #a56b1a;
+}
+
+.home-button-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.home-button-text span:first-child {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.home-button-text span:last-child {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 0 #0d3d19;
+}
+
+/* تأثيرات hover */
+.home-button-link:hover {
+    transform: scale(1.08) translateY(-5px);
+    background: linear-gradient(145deg, #2b803e, #1a5c2a);
+    box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+    gap: 18px;
+}
+
+.home-button-link:hover .dog-icon-wrapper {
+    transform: rotate(5deg) scale(1.05);
+    background: #ffe070;
+}
+
+.home-button-link:hover .dog-icon-wrapper i {
+    animation: bark 0.4s ease;
+}
+
+@keyframes bark {
+    0%,100% { transform: scaleX(-1) scale(1); }
+    50% { transform: scaleX(-1) scale(1.2); }
+}
+
+@keyframes subtle-pulse {
+    0%,100% { box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2); }
+    50% { box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3); }
+}
+
+/* تصميم متجاوب */
+@media (max-width: 600px) {
+    .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+    }
+    .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+    .dog-icon-wrapper i {
+        font-size: 2rem;
+    }
+    .home-button-text span:last-child {
+        font-size: 1.2rem;
+    }
+}
+</style>
+
+
+</head>
+<body>
+
+<div class="header">الحزم المقدمة</div>
+
+<section class="section">
+<h2>اختر الباقة المناسبة لكلبك</h2>
+
+<div class="packages">
+
+<div class="card highlight">
+<div class="icon">👑</div>
+<h3>الباقة المميزة</h3>
+<div class="price">الأفضل ⭐</div>
+<ul>
+<li>المشي أربعة مرات يوميًا</li>
+<li>ممارسة أربعة أنشطة</li>
+<li>مساحة عشب خاصة</li>
+<li>تحديثات وصور يومية</li>
+<li>مكافآت حسب الاتفاق</li>
+</ul>
+<button onclick="openModal('المميزة')">احجز الآن</button>
+</div>
+
+<div class="card">
+<div class="icon">🐾</div>
+<h3>الباقة الكلاسيكية</h3>
+<div class="price">متوازنة</div>
+<ul>
+<li>المشي ثلاثة مرات يوميًا</li>
+<li>ممارسة ثلاثة أنشطة</li>
+<li>حظيرة لعب داخلية</li>
+<li>منطقة استرخاء</li>
+<li>جلسة حلاقة وتنظيف</li>
+</ul>
+<button onclick="openModal('الكلاسيكية')">احجز الآن</button>
+</div>
+
+<div class="card">
+<div class="icon">🌿</div>
+<h3>باقة اليوم الواحد</h3>
+<div class="price">سريعة</div>
+<ul>
+<li>المشي مرتين يوميًا</li>
+<li>منطقة لعب خارجية</li>
+<li>مسار رشاقة</li>
+<li>حفر في الرمل</li>
+</ul>
+<button onclick="openModal('اليوم')">احجز الآن</button>
+</div>
+
+</div>
+
+<div class="custom-box">
+<h3>حزم مخصصة</h3>
+<p>
+تتوفر حزم مخصصة للإقامات الطويلة أو للكلاب ذات المتطلبات الإضافية.
+يرجى التواصل معنا لترتيب الباقة المناسبة.
+</p>
+<button onclick="openModal('مخصصة')">تواصل معنا</button>
+</div>
+
+</section>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <p>تم اختيار هذه الباقة.</p>
+    <button class="close" onclick="closeModal()">إغلاق</button>
+  </div>
+</div>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+<script>
+function openModal(packageName){
+  document.getElementById('modalTitle').innerText = "تم اختيار باقة " + packageName;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+}
+
+window.onclick = function(e){
+  if(e.target == document.getElementById('modal')){
+    closeModal();
+  }
+}
+</script>
+
+</body>
+</html>

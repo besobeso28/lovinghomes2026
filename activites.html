@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>مرافق الفندق</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0fdf4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+        }
+
+        .header {
+            background-color: #2e7d32;
+            color: #e8f5e9;
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .container {
+            flex: 3;
+            max-width: 900px;
+            margin: 6rem 2rem 2rem 2rem; /* ترك مساحة للهيدر */
+            padding: 1rem 2rem;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: #a5d6a7;
+            padding: 6rem 1rem 2rem 1rem; /* ترك مساحة للهيدر */
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #81c784;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .facility-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .facility-list li {
+            background: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h3 {
+            color: #1b5e20;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            background-color: #c8e6c9;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #81c784;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                padding: 1rem;
+            }
+
+            .container {
+                margin: 2rem 1rem;
+            }
+        }
+                /* تنسيق معرض الصور - أضف هذا الكود */
+        .gallery {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(129, 199, 132, 0.1);
+            border-radius: 20px;
+        }
+
+        .gallery img {
+            width: 350px;        /* زيادة الحجم */
+            height: 280px;        /* زيادة الارتفاع */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            object-fit: cover;
+            border: 4px solid #81c784;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.08);  /* تكبير عند المرور */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border-color: #2e7d32;
+        }
+
+        /* تنسيق للصور في الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .gallery img {
+                width: 100%;
+                height: auto;
+                max-width: 450px;
+            }
+        }
+
+        /* تنسيق النافذة المنبثقة (اختياري) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            padding-top: 50px;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            border: 4px solid #81c784;
+            box-shadow: 0 0 30px rgba(129, 199, 132, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #81c784;
+        }
+        /* زر العودة للصفحة الرئيسية */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-button-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #1e5e2c, #0f401d);
+      padding: 14px 28px 14px 22px;
+      border-radius: 80px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      border: 2px solid #d4f2c7;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      animation: subtle-pulse 2.5s infinite ease-in-out;
+    }
+
+    .dog-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9e05e;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .dog-icon-wrapper i {
+      font-size: 2.4rem;
+      color: #4a2f0d;
+      transform: scaleX(-1);
+      filter: drop-shadow(2px 2px 0 #a56711);
+    }
+
+    .dog-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 80% 0 40% 40%;
+      transform: rotate(-15deg);
+      box-shadow: -2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .dog-icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 0 80% 40% 40%;
+      transform: rotate(15deg);
+      box-shadow: 2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .home-button-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .home-button-text span:first-child {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .home-button-text span:last-child {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 0 #0d3d19;
+    }
+
+    .home-button-link:hover {
+      transform: scale(1.08) translateY(-5px);
+      background: linear-gradient(145deg, #2b803e, #1a5c2a);
+      box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+      gap: 18px;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper {
+      transform: rotate(5deg) scale(1.05);
+      background: #ffe070;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper i {
+      animation: bark 0.4s ease;
+    }
+
+    @keyframes bark {
+      0%, 100% {
+        transform: scaleX(-1) scale(1);
+      }
+      50% {
+        transform: scaleX(-1) scale(1.2);
+      }
+    }
+
+    @keyframes subtle-pulse {
+      0%, 100% {
+        box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2);
+      }
+      50% {
+        box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+      }
+      .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+      .dog-icon-wrapper i {
+        font-size: 2rem;
+      }
+      .home-button-text span:last-child {
+        font-size: 1.2rem;
+      }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="header">المرافق المقدمة</div>
+
+    <div class="container" id="main-content">
+        <h2 class="section-title">خدماتنا</h2>
+        <ul class="facility-list">
+            <li>صالة للحلاقة ومنتجع</li>
+            <li>غرف مزودة بتدفئة/ تبريد تحت الأرضية وتلفزيون</li>
+            <li>خدمة التوصيل "من وإلى المكان"</li>
+            <li>مراعي خارجية آمنة</li>
+            <li>خدمات بيطرية متاحة على مدار 24 ساعة</li>
+        </ul>
+    </div>
+
+    <div class="sidebar">
+    <h3>مرافق أخرى</h3>
+    <select id="facilities" onchange="showContent(this.value)">
+        <option value="">-- اختر مرفقاً --</option>
+        <option value="مراقبة الحيوانات الأليفة">مراقبة الحيوانات الأليفة</option>
+        <option value="التنزه في الغابات">التنزه في الغابات</option>
+        <option value="مساحة عشب خاصة">مساحة عشب خاصة</option>
+        <option value="حظيرة لعب داخلية">حظيرة لعب داخلية</option>
+        <option value="مسبح خارجي">مسبح خارجي</option>
+        <option value="قاعة رياضية">قاعة رياضية</option>
+    </select>
+</div>
+
+<div id="main-content">
+    <h2 class="section-title">خدماتنا</h2>
+    <p>اختر مرفقاً من القائمة الجانبية لعرض تفاصيله هنا.</p>
+</div>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+<script>
+   
+    // كائن يحتوي على صور متعددة + وصف لكل مرفق
+    const facilityDetails = {
+        "مراقبة الحيوانات الأليفة": {
+            desc: "خدمة مراقبة الحيوانات الأليفة على مدار اليوم لضمان راحتها وسلامتها.",
+            imgs: [
+                "../images/pet1.jpeg",
+                "../images/pet2.jpeg",
+                "../images/pet3.jpg"
+            ]
+        },
+        "التنزه في الغابات": {
+            desc: "رحلات مميزة للتنزه في الغابات القريبة مع مرشدين متخصصين.",
+            imgs: [
+                "../images/forest.jpg",
+                "../images/forest2.jpg"
+            ]
+        },
+        "مساحة عشب خاصة": {
+            desc: "مساحة خضراء مخصصة للعب والاسترخاء للحيوانات الأليفة.",
+            imgs: [
+                "../images/grass1.jpg",
+                "../images/grass2.jpg"
+            ]
+        },
+        "حظيرة لعب داخلية": {
+            desc: "مكان آمن ومجهز للعب داخل الفندق بعيداً عن الظروف الجوية.",
+            imgs: [
+                "../images/indoor1.jpg",
+                "../images/indoor2.jpg"
+            ]
+        },
+        "مسبح خارجي": {
+            desc: "مسبح واسع مع جلسات استرخاء حوله للحيوانات الأليفة والضيوف.",
+            imgs: [
+                "../images/pool1.jpg",
+                "../images/pool2.jpg"
+            ]
+        },
+        "قاعة رياضية": {
+            desc: "قاعة مجهزة بأحدث الأجهزة الرياضية لممارسة الأنشطة البدنية.",
+            imgs: [
+                "../images/gym1.jpg",
+                "../images/gym2.jpg"
+            ]
+        }
+    };
+
+    function showContent(facility) {
+        if (facility === "") return;
+        const container = document.getElementById('main-content');
+        const details = facilityDetails[facility];
+
+        // بناء معرض الصور
+        let gallery = "<div style='display:flex; gap:10px; flex-wrap:wrap;'>";
+        details.imgs.forEach(img => {
+            gallery += `<img src="${img}" alt="${facility}" style="width:200px; border-radius:10px;">`;
+        });
+        gallery += "</div>";
+
+        container.innerHTML = `
+            <h2 class="section-title">${facility}</h2>
+            <p>${details.desc}</p>
+            ${gallery}
+        `;
+    }
+</script>
+
+
+</body>
+</html>

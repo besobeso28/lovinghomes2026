@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لويفينغ هومز | تقييمات العملاء</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Tajawal', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e2f0d9 0%, #c0dfb0 100%);
+            min-height: 100vh;
+            padding: 2rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+        }
+
+        .testimonials-wrapper {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* عنوان رئيسي بأجواء خضراء */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1c4b2a;
+            text-shadow: 2px 2px 0 #b8e0a8;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.8rem 2.8rem;
+            border-radius: 80px;
+            box-shadow: 0 15px 25px -8px rgba(30, 80, 30, 0.4);
+            border: 2px solid #f5fff0;
+        }
+
+        .page-header h1 i {
+            color: #2a6e3a;
+            font-size: 2.8rem;
+        }
+
+        .page-header .paw-print {
+            font-size: 1.8rem;
+            letter-spacing: 12px;
+            color: #327a46;
+            margin-top: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* شبكة التقييمات + النموذج */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* قائمة التعليقات الموجودة (جانب أيمن) */
+        .reviews-list {
+            background: #eafbe2;
+            border-radius: 50px 50px 40px 40px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 25px 40px -15px #1f4a2b;
+            border: 3px solid #a5d89b;
+            backdrop-filter: blur(2px);
+            height: fit-content;
+            max-height: 700px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #2d7542 #d0f0c0;
+        }
+
+        .reviews-list h2 {
+            font-size: 2rem;
+            color: #0a421e;
+            margin-bottom: 1.8rem;
+            border-bottom: 4px solid #79b86b;
+            padding-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .reviews-list h2 i {
+            background: #2f7e41;
+            color: white;
+            padding: 0.6rem;
+            border-radius: 50%;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 40px 40px 30px 30px;
+            margin-bottom: 1.8rem;
+            padding: 1.5rem 1.8rem;
+            border: 2px solid #90c281;
+            box-shadow: 0 10px 18px -6px #386d3f;
+            transition: 0.2s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: #469459;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .customer-avatar {
+            background: #378b4b;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            font-weight: bold;
+            border: 3px solid #b7f0a5;
+            box-shadow: 0 4px 0 #1e5227;
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #194d27;
+            line-height: 1.3;
+        }
+
+        .review-date {
+            color: #487a4a;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating-stars {
+            color: #f7b731;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            background: #f1ffe7;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            border: 1px solid #99cf8a;
+            margin-right: auto;
+        }
+
+        .rating-stars i {
+            margin-left: 2px;
+        }
+
+        .review-text {
+            color: #1f4429;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 1rem 0 0.7rem 0;
+            background: #f4ffee;
+            padding: 1rem 1.3rem;
+            border-radius: 30px;
+            border: 1px solid #b6e0a8;
+        }
+
+        .dog-badge {
+            display: inline-block;
+            background: #c8f0b8;
+            color: #0e4f22;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            border: 1px solid #61a855;
+        }
+
+        /* نموذج إضافة تقييم (جانب أيسر) */
+        .add-review-card {
+            background: #dff0d6;
+            border-radius: 50px;
+            padding: 2.2rem 2rem;
+            box-shadow: 0 25px 35px -12px #235f31;
+            border: 3px solid #7fb873;
+            backdrop-filter: blur(2px);
+            position: sticky;
+            top: 1rem;
+        }
+
+        .add-review-card h2 {
+            font-size: 2rem;
+            color: #154d24;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-review-card h2 i {
+            color: #2b7a3b;
+        }
+
+        .form-group {
+            margin-bottom: 1.7rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1b542b;
+            margin-bottom: 0.6rem;
+            font-size: 1.15rem;
+        }
+
+        .form-group label i {
+            margin-left: 8px;
+            color: #3b8945;
+            width: 24px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #74aa67;
+            border-radius: 60px;
+            font-size: 1rem;
+            background: white;
+            outline: none;
+            transition: 0.2s;
+            color: #1c4d21;
+        }
+
+        .form-control:focus {
+            border-color: #1f8236;
+            box-shadow: 0 0 0 4px rgba(60, 150, 70, 0.2);
+        }
+
+        textarea.form-control {
+            border-radius: 30px;
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .rating-selector {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #ecffe2;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid #7dad6e;
+        }
+
+        .rating-selector input {
+            display: none;
+        }
+
+        .rating-selector label {
+            font-size: 2.2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: 0.1s;
+            margin: 0 2px;
+        }
+
+        .rating-selector label i {
+            color: inherit;
+        }
+
+        .rating-selector label:hover,
+        .rating-selector label:hover ~ label,
+        .rating-selector input:checked ~ label {
+            color: #f9b81b;
+        }
+
+        .rating-selector label:hover i,
+        .rating-selector label:hover ~ label i,
+        .rating-selector input:checked ~ label i {
+            color: #f9b81b;
+        }
+
+        .btn-submit {
+            background: #1e6933;
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 80px;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 2px solid #b3f09d;
+            box-shadow: 0 9px 0 #0b3b18;
+            transition: 0.08s linear;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:active {
+            transform: translateY(6px);
+            box-shadow: 0 3px 0 #0b3b18;
+        }
+
+        .btn-submit:hover {
+            background: #258a3c;
+        }
+
+        .success-message {
+            background: #317a41;
+            color: white;
+            padding: 1rem;
+            border-radius: 60px;
+            text-align: center;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            border: 2px solid #c6ffad;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* تذييل الصفحة مع رابط للصفحة السابقة */
+        .footer-nav {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #215f33;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 2px solid #aae095;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            background: #134b23;
+            gap: 18px;
+        }
+
+        /* شريط التمرير المخصص */
+        .reviews-list::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .reviews-list::-webkit-scrollbar-track {
+            background: #c8e2bb;
+            border-radius: 20px;
+        }
+
+        .reviews-list::-webkit-scrollbar-thumb {
+            background: #34853e;
+            border-radius: 20px;
+            border: 2px solid #b3e0a0;
+        }
+
+        @media (max-width: 900px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .add-review-card {
+                position: static;
+            }
+            .page-header h1 {
+                font-size: 2.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="testimonials-wrapper">
+        <!-- رأس الصفحة -->
+        <div class="page-header">
+            <h1>
+                <i class="fas fa-solid fa-comment-dots"></i>
+                آراء وتقييمات العملاء
+                <i class="fas fa-solid fa-dog"></i>
+            </h1>
+            <div class="paw-print">🐾 🐾 🐾 🐾 🐾</div>
+        </div>
+
+        <!-- المحتوى الرئيسي: شبكة من عمودين -->
+        <div class="testimonials-grid">
+            <!-- القائمة اليمنى: التعليقات الحالية (تقييمات العملاء) -->
+            <div class="reviews-list" id="reviewsListContainer">
+                <h2><i class="fas fa-star"></i> تقييمات 5 نجوم من عملائنا</h2>
+                <!-- ستتم تعبئة البطاقات تلقائياً عبر js -->
+            </div>
+
+            <!-- النموذج الايسر: إضافة تقييم جديد -->
+            <div class="add-review-card">
+                <h2><i class="fas fa-pen-fancy"></i> شاركنا تجربتك</h2>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> اسمك الكريم</label>
+                        <input type="text" class="form-control" id="customerName" placeholder="مثال: أبو سامي" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-dog"></i> اسم كلبك (اختياري)</label>
+                        <input type="text" class="form-control" id="dogName" placeholder="مثل: لونا">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-star"></i> التقييم</label>
+                        <div class="rating-selector" dir="ltr">
+                            <input type="radio" name="rating" id="star5" value="5"><label for="star5"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star4" value="4"><label for="star4"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star3" value="3"><label for="star3"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star2" value="2"><label for="star2"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star1" value="1"><label for="star1"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-message"></i> تعليقك</label>
+                        <textarea class="form-control" id="reviewText" rows="3" placeholder="أخبرنا عن تجربتك في لويفينغ هومز..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> أرسل التقييم</button>
+                    <div class="success-message" id="successMessage">تم إضافة تقييمك بنجاح! شكراً لك 🐶</div>
+                </form>
+            </div>
+        </div>
+
+        <!-- رابط العودة لصفحة الأسئلة الشائعة (customers.html) -->
+        <div class="footer-nav">
+            <a href="index2.html" class="back-link"><i class="fas fa-arrow-right"></i> العودة الى الصفحة الرئيسية</a>
+        </div>
+    </div>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+    <script>
+        (function() {
+            // ---------- بيانات أولية (تقييمات وهمية) ----------
+            let reviews = [
+                {
+                    id: 1,
+                    customerName: 'سارة الأحمد',
+                    dogName: 'كوكي',
+                    rating: 5,
+                    date: '٢ مارس ٢٠٢٦',
+                    comment: 'فندق رائع جداً، كلبي استمتع بالمسيرة واللعب في المراعي. الطاقم متعاون وحنون. أنصح بشدة بحزمة المسيرة.'
+                },
+                {
+                    id: 2,
+                    customerName: 'أحمد فهد',
+                    dogName: 'ماكس',
+                    rating: 5,
+                    date: '٢٨ فبراير ٢٠٢٦',
+                    comment: 'منتجع متكامل، خدمة الحلاقة ممتازة والكلب طلع نظيف ومرتاح. الخدمة البيطرية ٢٤ ساعة تطمن.'
+                },
+                {
+                    id: 3,
+                    customerName: 'نورة العنزي',
+                    dogName: 'لولو',
+                    rating: 4,
+                    date: '٢٥ فبراير ٢٠٢٦',
+                    comment: 'المكان نظيف ومرتب، أعجبني التحديث بالصور اليومية. لو يزيدوا نشاط التنشئة في الغابات يكون أفضل.'
+                },
+                {
+                    id: 4,
+                    customerName: 'عبدالله السعد',
+                    dogName: 'رعد',
+                    rating: 5,
+                    date: '٢٠ فبراير ٢٠٢٦',
+                    comment: 'حجزت حزمة الكالبيكية، و كانت تجربة حلاقة وتنظيم رائعة. الكلب استرخى تماماً في منطقة الاسترخاء.'
+                },
+                {
+                    id: 5,
+                    customerName: 'لطيفة المطيري',
+                    dogName: 'تشي تشي',
+                    rating: 5,
+                    date: '١٨ فبراير ٢٠٢٦',
+                    comment: 'ما شاء الله تبارك الله، مراعي آمنة ومساحات واسعة. كلبي حفر في الرمل وانبسط مره. أكيد راح نعيد الزيارة.'
+                }
+            ];
+
+            // عناصر DOM
+            const reviewsContainer = document.getElementById('reviewsListContainer');
+            const form = document.getElementById('reviewForm');
+            const nameInput = document.getElementById('customerName');
+            const dogInput = document.getElementById('dogName');
+            const reviewText = document.getElementById('reviewText');
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+            const successMsg = document.getElementById('successMessage');
+
+            // دالة عرض التقييمات
+            function renderReviews() {
+                let html = `<h2><i class="fas fa-star"></i> تقييمات 5 نجوم من عملائنا</h2>`;
+                reviews.forEach(r => {
+                    // تحويل التقييم إلى نجوم
+                    let stars = '';
+                    for (let i = 0; i < 5; i++) {
+                        stars += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                    }
+
+                    // اسم الكلب للعرض
+                    const dogDisplay = r.dogName ? `<span class="dog-badge"><i class="fas fa-paw"></i> ${r.dogName}</span>` : '';
+
+                    html += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="customer-avatar">${r.customerName.charAt(0)}</div>
+                            <div class="customer-info">
+                                <div class="customer-name">${r.customerName} ${dogDisplay}</div>
+                                <div class="review-date"><i class="far fa-calendar-alt"></i> ${r.date || 'اليوم'}</div>
+                            </div>
+                            <div class="rating-stars">${stars}</div>
+                        </div>
+                        <div class="review-text">
+                            <i class="fas fa-quote-right" style="margin-left: 8px; opacity:0.6;"></i>
+                            ${r.comment}
+                        </div>
+                    </div>`;
+                });
+                // لو مافيه تقييمات بعد (لا سمح الله)
+                if (reviews.length === 0) {
+                    html += `<div class="review-card" style="text-align: center;">لا توجد تقييمات بعد. كن أول من يقيّم!</div>`;
+                }
+                reviewsContainer.innerHTML = html;
+            }
+
+            // دالة لجلب التاريخ الحالي بصيغة عربية مبسطة
+            function getCurrentDateArabic() {
+                const now = new Date();
+                const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                return now.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }).replace(/[٠-٩]/g, function(d) {
+                    // تحويل الأرقام الهندية إلى العربية إن وجدت، لكنها مقبولة.
+                    return d;
+                });
+            }
+
+            // إضافة تقييم جديد
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // التحقق من الاسم والتعليق والتقييم
+                const name = nameInput.value.trim();
+                const comment = reviewText.value.trim();
+                let selectedRating = 0;
+                for (let radio of ratingInputs) {
+                    if (radio.checked) {
+                        selectedRating = parseInt(radio.value);
+                        break;
+                    }
+                }
+
+                if (!name || !comment || selectedRating === 0) {
+                    alert('يرجى تعبئة الاسم والتعليق واختيار تقييم بالنجوم');
+                    return;
+                }
+
+                // إنشاء كائن التقييم الجديد
+                const newReview = {
+                    id: reviews.length + 1,
+                    customerName: name,
+                    dogName: dogInput.value.trim() || '',
+                    rating: selectedRating,
+                    date: getCurrentDateArabic(),
+                    comment: comment
+                };
+
+                reviews.unshift(newReview);  // نضيفه في البداية
+                renderReviews();
+
+                // إعادة تعيين النموذج
+                form.reset();
+                // إظهار رسالة النجاح
+                successMsg.classList.add('show');
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 3000);
+
+                // تمرير سلس لقائمة التقييمات
+                const reviewsListElement = document.querySelector('.reviews-list');
+                if (reviewsListElement) {
+                    reviewsListElement.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // التهيئة
+            renderReviews();
+
+            // تحديد أعلى تقييم تلقائي (اختياري)
+            document.getElementById('star5').checked = true;
+        })();
+    </script>
+</body>
+</html>

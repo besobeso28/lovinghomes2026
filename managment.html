@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loving Home - صفحة الإدارة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f9f5;
+            color: #333;
+        }
+
+        /* ===== Header Styles ===== */
+        .top {
+            background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+        }
+
+        .logo {
+            height: 70px;
+            width: 70px;
+            border-radius: 50%;
+            border: 3px solid #a5d6a7;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            text-align: right;
+            letter-spacing: 1px;
+            font-weight: 300;
+            color: #e8f5e9;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            margin: 0;
+        }
+
+        .title span {
+            font-weight: 600;
+            color: #a5d6a7;
+        }
+
+        /* ===== Admin Navigation ===== */
+        .admin-nav {
+            background-color: #1a3c40;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .admin-nav a:hover {
+            background-color: #d4af37;
+            transform: translateY(-2px);
+        }
+
+        .admin-nav a i {
+            margin-left: 0.5rem;
+        }
+
+        /* ===== Section Styles ===== */
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #2e7d32;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        /* ===== Employee Cards Grid ===== */
+        .employees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .employee-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(46, 125, 50, 0.2);
+            border-color: #66bb6a;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #66bb6a);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-header .position {
+            font-size: 1rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item i {
+            width: 25px;
+            color: #2e7d32;
+            font-size: 1.2rem;
+        }
+
+        .info-item .label {
+            font-weight: 600;
+            color: #555;
+            min-width: 70px;
+        }
+
+        .info-item .value {
+            color: #333;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .hk-flag {
+            display: inline-block;
+            margin-right: 0.5rem;
+            color: #d4af37;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .contact-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #2e7d32, #66bb6a);
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.4);
+        }
+
+        .contact-btn.whatsapp {
+            background: linear-gradient(135deg, #25d366, #128C7E);
+        }
+
+        .contact-btn.email {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        /* ===== Hong Kong Badge ===== */
+        .hk-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #d4af37;
+            color: #1a3c40;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hk-badge i {
+            font-size: 0.9rem;
+        }
+
+        /* ===== Department Banner ===== */
+        .dept-banner {
+            background: linear-gradient(135deg, #1a3c40, #2e7d32);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dept-banner h2 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dept-banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .dept-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #d4af37;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .top {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .dept-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .dept-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .employees-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-footer {
+                flex-direction: column;
+            }
+
+            .contact-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                height: 60px;
+                width: 60px;
+            }
+        }
+
+        /* ===== Floating HK Map ===== */
+        .hk-map {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: linear-gradient(135deg, #1a3c40, #2e7d32);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .hk-map:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .hk-map i {
+            font-size: 2rem;
+            color: #d4af37;
+        }
+
+        .tooltip {
+            position: absolute;
+            left: 70px;
+            background: #1a3c40;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .hk-map:hover .tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <div class="logo-container">
+            <img src="../images/logo.jpeg" alt="Loving Home Logo" class="logo" />
+        </div>
+        <h1 class="title"><span>Loving Home</span> Hotel - <span>إدارة</span> هونج كونج</h1>
+    </div>
+
+    <div class="admin-nav">
+        <a href="#vet"><i class="fas fa-clinic-medical"></i> العيادة البيطرية</a>
+        <a href="#grooming"><i class="fas fa-cut"></i> الحلاقة</a>
+        <a href="#delivery"><i class="fas fa-truck"></i> التوصيل</a>
+        <a href="#photography"><i class="fas fa-camera"></i> التصوير</a>
+        <a href="#care"><i class="fas fa-heart"></i> الرعاية</a>
+    </div>
+
+    <!-- Hong Kong Floating Button -->
+    <div class="hk-map">
+        <i class="fas fa-map-marker-alt"></i>
+        <span class="tooltip">هونج كونج - Hong Kong</span>
+    </div>
+
+    <div class="section-container">
+        <!-- Veterinary Clinic Section -->
+        <section id="vet">
+            <div class="dept-banner">
+                <h2><i class="fas fa-clinic-medical"></i> العيادة البيطرية</h2>
+                <p>أفضل الأطباء البيطريين في هونج كونج لرعاية حيواناتكم الأليفة</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <div class="number">5</div>
+                        <div>أطباء</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">24/7</div>
+                        <div>خدمة طارئة</div>
+                    </div>
+                </div>
+            </div>
+            <div class="employees-grid">
+                <!-- Dr. Chen Wei Ming -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Chen Wei Ming">
+                        <h3>د. تشين وي مينغ</h3>
+                        <div class="position"><i class="fas fa-stethoscope"></i> استشاري بيطري أول</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">dr.chen@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9123 4567</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Central, Hong Kong</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:dr.chen@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85291234567" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Dr. Li Ka Fai -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Li Ka Fai">
+                        <h3>د. لي كا فاي</h3>
+                        <div class="position"><i class="fas fa-heartbeat"></i> أخصائية جراحة</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">dr.li@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9234 5678</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Causeway Bay, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:dr.li@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85292345678" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grooming Section -->
+        <section id="grooming">
+            <div class="dept-banner">
+                <h2><i class="fas fa-cut"></i> قسم الحلاقة والتجميل</h2>
+                <p>أحدث صيحات التجميل للحيوانات الأليفة في هونج كونج</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <div class="number">4</div>
+                        <div>خبراء تجميل</div>
+                    </div>
+                </div>
+            </div>
+            <div class="employees-grid">
+                <!-- Wong Siu Ming -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Wong Siu Ming">
+                        <h3>وونغ سيومنغ</h3>
+                        <div class="position"><i class="fas fa-cut"></i> خبير حلاقة محترف</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">wong.sm@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9345 6789</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Tsim Sha Tsui, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:wong.sm@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85293456789" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Chan Mei Ling -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="Chan Mei Ling">
+                        <h3>تشان مي لينغ</h3>
+                        <div class="position"><i class="fas fa-spa"></i> أخصائية تجميل</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">chan.ml@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9456 7890</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Mong Kok, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:chan.ml@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85294567890" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Section -->
+        <section id="delivery">
+            <div class="dept-banner">
+                <h2><i class="fas fa-truck"></i> قسم التوصيل</h2>
+                <p>توصيل سريع وآمن في جميع أنحاء هونج كونج</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <div class="number">6</div>
+                        <div>سائقين</div>
+                    </div>
+                </div>
+            </div>
+            <div class="employees-grid">
+                <!-- Leung Kwok Wing -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Leung Kwok Wing">
+                        <h3>ليونغ كوك وينغ</h3>
+                        <div class="position"><i class="fas fa-truck"></i> مدير التوصيل</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">leung.kw@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9567 8901</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Kwun Tong, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:leung.kw@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85295678901" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Hui Suk Han -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/17.jpg" alt="Hui Suk Han">
+                        <h3>هوي سوك هان</h3>
+                        <div class="position"><i class="fas fa-motorcycle"></i> سائقة توصيل</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">hui.sh@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9678 9012</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Wan Chai, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:hui.sh@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85296789012" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photography Section -->
+        <section id="photography">
+            <div class="dept-banner">
+                <h2><i class="fas fa-camera"></i> قسم التصوير</h2>
+                <p>أجمل اللقطات الاحترافية لحيواناتكم الأليفة</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <div class="number">3</div>
+                        <div>مصورين</div>
+                    </div>
+                </div>
+            </div>
+            <div class="employees-grid">
+                <!-- Lam Kin Wah -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Lam Kin Wah">
+                        <h3>لام كين واه</h3>
+                        <div class="position"><i class="fas fa-camera-retro"></i> مصور محترف</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">lam.kw@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9789 0123</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Stanley, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:lam.kw@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85297890123" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Yip Sau Man -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/50.jpg" alt="Yip Sau Man">
+                        <h3>ييب ساو مان</h3>
+                        <div class="position"><i class="fas fa-video"></i> مصورة فيديو</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">yip.sm@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9890 1234</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Repulse Bay, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:yip.sm@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85298901234" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Care Section -->
+        <section id="care">
+            <div class="dept-banner">
+                <h2><i class="fas fa-heart"></i> قسم الرعاية</h2>
+                <p>رعاية متكاملة على مدار الساعة لحيواناتكم</p>
+                <div class="dept-stats">
+                    <div class="stat">
+                        <div class="number">8</div>
+                        <div>مشرفين</div>
+                    </div>
+                </div>
+            </div>
+            <div class="employees-grid">
+                <!-- Cheung Wing Sze -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cheung Wing Sze">
+                        <h3>تشيونغ وينغ سي</h3>
+                        <div class="position"><i class="fas fa-heartbeat"></i> مشرفة رعاية</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">cheung.ws@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9901 2345</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Sai Kung, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:cheung.ws@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85299012345" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Tsang Kar Wai -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="Tsang Kar Wai">
+                        <h3>تسانغ كار واي</h3>
+                        <div class="position"><i class="fas fa-dog"></i> مدرب ومشرف</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">tsang.kw@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9012 3456</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Discovery Bay, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:tsang.kw@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85290123456" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+
+                <!-- Additional Care Staff -->
+                <div class="employee-card">
+                    <div class="hk-badge"><i class="fas fa-map-pin"></i> Hong Kong</div>
+                    <div class="card-header">
+                        <img src="https://randomuser.me/api/portraits/women/93.jpg" alt="Kwok Pui Shan">
+                        <h3>كوك بوي شان</h3>
+                        <div class="position"><i class="fas fa-cat"></i> أخصائية رعاية</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span class="label">البريد:</span>
+                            <span class="value">kwok.ps@lovinghome.hk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span class="label">الهاتف:</span>
+                            <span class="value">+852 9123 7890</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="label">العنوان:</span>
+                            <span class="value">Aberdeen, HK</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="mailto:kwok.ps@lovinghome.hk" class="contact-btn email"><i class="fas fa-envelope"></i> إيميل</a>
+                        <a href="https://wa.me/85291237890" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> واتساب</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hong Kong Central Office -->
+        <div style="background: linear-gradient(135deg, #1a3c40, #2e7d32); color: white; padding: 2rem; border-radius: 20px; margin-top: 3rem; text-align: center;">
+            <i class="fas fa-building" style="font-size: 3rem; color: #d4af37; margin-bottom: 1rem;"></i>
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">المكتب الرئيسي - هونج كونج</h2>
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem;">
+                <div><i class="fas fa-phone-alt"></i> +852 2345 6789</div>
+                <div><i class="fas fa-envelope"></i> info@lovinghome.hk</div>
+                <div><i class="fas fa-map-marker-alt"></i> 15-19 Queen's Road, Central, Hong Kong</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.admin-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.admin-nav a');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const scroll = window.scrollY;
+                
+                if (scroll >= sectionTop && scroll < sectionBottom) {
+                    const id = section.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.style.backgroundColor = link.getAttribute('href') === `#${id}` ? '#d4af37' : 'rgba(255, 255, 255, 0.1)';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

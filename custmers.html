@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<title>نموذج حجز</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#e8f5e9,#c8e6c9);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.booking-form{
+    background: linear-gradient(145deg,#ffffff,#e8f5e9);
+    padding:30px;
+    border-radius:20px;
+    width:400px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.booking-form:hover{
+    transform:translateY(-5px);
+}
+
+.booking-form h2{
+    text-align:center;
+    color:#1b5e20;
+    margin-bottom:20px;
+}
+
+.booking-form input,
+.booking-form select{
+    width:100%;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:8px;
+    border:2px solid #a5d6a7;
+    outline:none;
+    transition:0.3s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus{
+    border-color:#2e7d32;
+    box-shadow:0 0 8px rgba(46,125,50,0.3);
+}
+
+.booking-form button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(135deg,#2e7d32,#66bb6a);
+    color:white;
+    transition:0.3s;
+}
+
+.booking-form button:hover{
+    background:linear-gradient(135deg,#1b5e20,#4caf50);
+    transform:scale(1.03);
+}
+
+.booking-form button:active{
+    transform:scale(0.97);
+}
+/* زر العودة للصفحة الرئيسية */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-button-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #1e5e2c, #0f401d);
+      padding: 14px 28px 14px 22px;
+      border-radius: 80px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      border: 2px solid #d4f2c7;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      animation: subtle-pulse 2.5s infinite ease-in-out;
+    }
+
+    .dog-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9e05e;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .dog-icon-wrapper i {
+      font-size: 2.4rem;
+      color: #4a2f0d;
+      transform: scaleX(-1);
+      filter: drop-shadow(2px 2px 0 #a56711);
+    }
+
+    .dog-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 80% 0 40% 40%;
+      transform: rotate(-15deg);
+      box-shadow: -2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .dog-icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 0 80% 40% 40%;
+      transform: rotate(15deg);
+      box-shadow: 2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .home-button-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .home-button-text span:first-child {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .home-button-text span:last-child {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 0 #0d3d19;
+    }
+
+    .home-button-link:hover {
+      transform: scale(1.08) translateY(-5px);
+      background: linear-gradient(145deg, #2b803e, #1a5c2a);
+      box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+      gap: 18px;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper {
+      transform: rotate(5deg) scale(1.05);
+      background: #ffe070;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper i {
+      animation: bark 0.4s ease;
+    }
+
+    @keyframes bark {
+      0%, 100% {
+        transform: scaleX(-1) scale(1);
+      }
+      50% {
+        transform: scaleX(-1) scale(1.2);
+      }
+    }
+
+    @keyframes subtle-pulse {
+      0%, 100% {
+        box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2);
+      }
+      50% {
+        box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+      }
+      .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+      .dog-icon-wrapper i {
+        font-size: 2rem;
+      }
+      .home-button-text span:last-child {
+        font-size: 1.2rem;
+      }
+    }
+</style>
+</head>
+
+<body>
+
+<form class="booking-form">
+    <h2>حجز باقة</h2>
+
+    <input type="text" placeholder="الاسم الكامل" required>
+
+    <input type="email" placeholder="البريد الإلكتروني" required>
+
+    <input type="tel" placeholder="رقم الهاتف" required>
+
+    <input type="text" placeholder="العنوان" required>
+
+    <select required>
+        <option value="">اختر الباقة</option>
+        <option value="المميزة">المميزة</option>
+        <option value="الكلاسيكية">الكلاسيكية</option>
+        <option value="المخصصة">المخصصة</option>
+        <option value="اليوم">اليوم</option>
+    </select>
+
+    <button type="submit">تأكيد الحجز</button>
+</form>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+<script>
+const form = document.querySelector(".booking-form");
+
+form.addEventListener("submit", function(e) {
+    // منع الإرسال الافتراضي
+    e.preventDefault();
+
+    // جمع جميع الحقول
+    const name = form.querySelector('input[type="text"]').value.trim();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const phone = form.querySelector('input[type="tel"]').value.trim();
+    const address = form.querySelectorAll('input[type="text"]')[1].value.trim(); // الحقل الثاني من النوع text هو العنوان
+    const packageSelect = form.querySelector('select').value;
+
+    // التحقق من ملء جميع الحقول
+    if (!name || !email || !phone || !address || !packageSelect) {
+        alert("يرجى ملء جميع الحقول قبل تأكيد الحجز!");
+        return;
+    }
+
+    // إذا كانت جميع الحقول ممتلئة
+    alert(`تم تأكيد الحجز بنجاح!\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nرقم الهاتف: ${phone}\nالعنوان: ${address}\nالباقة: ${packageSelect}`);
+
+    // يمكنك هنا إضافة كود لإرسال البيانات إلى السيرفر إذا أردت
+    form.reset(); // إعادة تعيين النموذج بعد التأكيد
+});
+</script>
+</body>
+</html>

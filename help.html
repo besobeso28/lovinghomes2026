@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لويفينغ هومز | الأسئلة الشائعة</title>
+    <!-- Font Awesome للايقونات (اختياري لكنه يعطي لمسة احترافية) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f9e8 0%, #d9e8d4 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            direction: rtl; /* لدعم العربية */
+        }
+
+        /* الحاوية الرئيسية */
+        .faq-container {
+            max-width: 950px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 48px 48px 40px 40px;
+            box-shadow: 0 25px 45px -12px rgba(30, 70, 40, 0.35), 0 10px 20px -5px rgba(0, 40, 0, 0.2);
+            overflow: hidden;
+            border: 2px solid rgba(120, 170, 100, 0.3);
+        }
+
+        /* رأس الصفحة بلون اخضر غامق */
+        .faq-header {
+            background: #1e4a2f;  /* اخضر غامق */
+            padding: 2.2rem 2.5rem;
+            color: white;
+            border-bottom: 6px solid #a6d89e;
+        }
+
+        .faq-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .faq-header h1 i {
+            color: #d4f2c7;
+            font-size: 2.4rem;
+        }
+
+        .faq-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #e2f0da;
+            margin-right: 3.2rem;
+        }
+
+        .paw-divider {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            margin-right: 3.2rem;
+        }
+
+        .paw-divider span {
+            color: #b3e0a0;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+        }
+
+        /* قسم البحث والفلترة (اضافة تفاعلية) */
+        .faq-search {
+            background: #f5fff0;
+            padding: 1.3rem 2.5rem;
+            border-bottom: 1px solid #b7d7a9;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 60px;
+            padding: 0.5rem 1rem;
+            border: 1.5px solid #2e7d4e;
+            box-shadow: 0 3px 10px rgba(0, 60, 0, 0.05);
+            flex: 2 1 260px;
+        }
+
+        .search-wrapper i {
+            color: #2a6b3a;
+            font-size: 1.2rem;
+            margin: 0 5px;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 1rem;
+            padding: 0.4rem 0.8rem;
+            color: #1d4623;
+            font-weight: 500;
+        }
+
+        .search-wrapper input::placeholder {
+            color: #7f9f75;
+            font-weight: 300;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1d4e2b;
+            border: 1.5px solid #3b7a4a;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(70, 120, 70, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-btn i {
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: #246b39;
+            color: white;
+            border-color: #246b39;
+        }
+
+        .filter-btn:hover {
+            background: #daf1d0;
+            border-color: #1f642f;
+        }
+
+        /* قائمة الاسئلة */
+        .faq-list {
+            padding: 1.8rem 2.5rem 2.5rem;
+        }
+
+        /* عنصر السؤال الواحد */
+        .faq-item {
+            background: white;
+            border-radius: 30px;
+            margin-bottom: 1.2rem;
+            padding: 0.3rem 0;
+            box-shadow: 0 5px 14px rgba(30, 80, 30, 0.1);
+            border: 1.5px solid #b4dba8;
+            transition: all 0.25s;
+        }
+
+        .faq-item:hover {
+            border-color: #3d9140;
+            box-shadow: 0 10px 22px rgba(50, 110, 30, 0.15);
+            transform: scale(1.01);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.4rem 2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .question-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .question-content i {
+            font-size: 1.9rem;
+            color: #2d8642;
+            width: 35px;
+            text-align: center;
+        }
+
+        .question-content h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #0f3b1f;
+            letter-spacing: -0.2px;
+        }
+
+        .toggle-icon {
+            font-size: 1.8rem;
+            color: #267347;
+            transition: transform 0.3s ease;
+            background: #e6f3de;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(180deg);
+            background: #c0e0b2;
+            color: #0a4b1a;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f9fff7;
+            border-radius: 0 0 30px 30px;
+            border-top: 1px solid transparent;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 350px;  /* كافي لمعظم الإجابات */
+            border-top: 2px solid #b1e0a1;
+        }
+
+        .answer-content {
+            padding: 1.5rem 2rem 1.8rem 2rem;
+            color: #1f4025;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .answer-content p {
+            margin-bottom: 0.7rem;
+        }
+
+        .answer-content ul {
+            margin-right: 2rem;
+            list-style-type: none;
+        }
+
+        .answer-content li {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .answer-content li i {
+            color: #318f4f;
+            width: 22px;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            background: #b0dda3;
+            color: #154d1e;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* تذييل */
+        .faq-footer {
+            background: #d0e8c4;
+            padding: 1.4rem 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 2px solid #7fa074;
+            color: #1c4f2a;
+            font-weight: 500;
+        }
+
+        .faq-footer .contact-link {
+            background: #1e5e30;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+            border: 1px solid #c0e8b0;
+        }
+
+        .faq-footer .contact-link:hover {
+            background: #0e4120;
+            transform: translateY(-2px);
+        }
+
+        /* رسالة "لا توجد نتائج" */
+        .no-result {
+            text-align: center;
+            padding: 3rem;
+            background: #e7f5de;
+            border-radius: 50px;
+            color: #2e693a;
+            font-size: 1.3rem;
+            border: 2px dashed #89ba7a;
+        }
+
+        .no-result i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ريسponsive */
+        @media (max-width: 650px) {
+            .faq-header h1 { font-size: 2rem; }
+            .faq-question { padding: 1rem 1.5rem; }
+            .question-content h3 { font-size: 1.1rem; }
+            .faq-header p { margin-right: 0.5rem; }
+            .paw-divider { margin-right: 0.5rem; }
+        }
+        
+.home-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-button-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(145deg, #1e5e2c, #0f401d);
+    padding: 14px 28px 14px 22px;
+    border-radius: 80px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    border: 2px solid #d4f2c7;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    animation: subtle-pulse 2.5s infinite ease-in-out;
+}
+
+/* صورة الكلب - باستخدام أيقونة + تصميم يشبه الوجه */
+.dog-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9e05e;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+    position: relative;
+    transition: 0.3s;
+}
+
+.dog-icon-wrapper i {
+    font-size: 2.4rem;
+    color: #4a2f0d;
+    transform: scaleX(-1);
+    filter: drop-shadow(2px 2px 0 #a56711);
+}
+
+/* أذن الكلب (إضافة تفصيل ظريف) */
+.dog-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: #f9e05e;
+    border-radius: 80% 0 40% 40%;
+    transform: rotate(-15deg);
+    box-shadow: -2px -2px 0 #a56b1a;
+    border: 2px solid #a56b1a;
+}
+
+.dog-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -2px;
+    width: 16px;
+    height: 16px;
+    background: #f9e05e;
+    border-radius: 0 80% 40% 40%;
+    transform: rotate(15deg);
+    box-shadow: 2px -2px 0 #a56b1a;
+    border: 2px solid #a56b1a;
+}
+
+.home-button-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.home-button-text span:first-child {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.home-button-text span:last-child {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 0 #0d3d19;
+}
+
+/* تأثيرات hover */
+.home-button-link:hover {
+    transform: scale(1.08) translateY(-5px);
+    background: linear-gradient(145deg, #2b803e, #1a5c2a);
+    box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+    gap: 18px;
+}
+
+.home-button-link:hover .dog-icon-wrapper {
+    transform: rotate(5deg) scale(1.05);
+    background: #ffe070;
+}
+
+.home-button-link:hover .dog-icon-wrapper i {
+    animation: bark 0.4s ease;
+}
+
+@keyframes bark {
+    0%,100% { transform: scaleX(-1) scale(1); }
+    50% { transform: scaleX(-1) scale(1.2); }
+}
+
+@keyframes subtle-pulse {
+    0%,100% { box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2); }
+    50% { box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3); }
+}
+
+/* تصميم متجاوب */
+@media (max-width: 600px) {
+    .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+    }
+    .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+    .dog-icon-wrapper i {
+        font-size: 2rem;
+    }
+    .home-button-text span:last-child {
+        font-size: 1.2rem;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="faq-container">
+        <!-- الرأس -->
+        <div class="faq-header">
+            <h1>
+                <i class="fas fa-paw"></i> 
+                لويفينغ هومز
+            </h1>
+            <p>أسئلة واستفسارات الكلاب وأصحابها الأوفياء</p>
+            <div class="paw-divider">
+                <span>🐾 🐾 🐾 🐾 🐾</span>
+            </div>
+        </div>
+
+        <!-- شريط البحث والتصفيف (تفاعلي) -->
+        <div class="faq-search">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="faqSearchInput" placeholder="ابحث في الأسئلة... (مثلاً: حلاقة، حزم)">
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-btn active" data-filter="all"><i class="fas fa-dog"></i> الكل</button>
+                <button class="filter-btn" data-filter="services"><i class="fas fa-cut"></i> خدمات & حلاقة</button>
+                <button class="filter-btn" data-filter="packages"><i class="fas fa-box-open"></i> الحزم</button>
+                <button class="filter-btn" data-filter="facility"><i class="fas fa-tree"></i> المرافق</button>
+            </div>
+        </div>
+
+        <!-- قائمة الأسئلة الشائعة -->
+        <div class="faq-list" id="faqList">
+            <!-- سيتم إنشاء العناصر عبر JS لكن يمكن كتابتها يدويا أيضا.
+                 سنستخدم JS لملئها مع بقاء التفاعلية -->
+        </div>
+
+        <!-- التذييل -->
+        <div class="faq-footer">
+            <span><i class="fas fa-phone-alt" style="margin-left: 8px;"></i> تواصل معنا: +852 1234 5678</span>
+            <a href="custmers.html" class="contact-link"><i class="fas fa-envelope"></i> احجز مخصص</a>
+        </div>
+    </div>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+    <script>
+        (function() {
+            // ---------- قاعدة البيانات (الأسئلة والإجابات) ----------
+            const faqData = [
+                {
+                    id: 1,
+                    question: "ما هي مرافق الصالة والمنتجع المتوفرة للكلاب؟",
+                    answer: `يشمل منتجع الصالة لدينا:
+                    <ul>
+                        <li><i class="fas fa-thermometer-half"></i> غرف بتدفئة/تبريد تحت الأرضية وتلفزيون.</li>
+                        <li><i class="fas fa-shuttle-van"></i> خدمة التوصيل "من وإلى المكان" مجانية.</li>
+                        <li><i class="fas fa-tree"></i> مراعي خارجية آمنة ومسيجّة.</li>
+                        <li><i class="fas fa-clock"></i> خدمات بيطرية متاحة 24 ساعة.</li>
+                    </ul>
+                    بالإضافة إلى مراقبة الحيوانات الأليفة، التنشئة في الغابات، مساحة عشب خاصة، وحظيرة لعب داخلية.`,
+                    category: "facility",
+                    tags: ["منتجع", "صالة", "غرف", "تدفئة", "بيطري"]
+                },
+                {
+                    id: 2,
+                    question: "ماذا تشمل حزمة 'المسيرة' (اليومية)؟",
+                    answer: `حزمة <strong>المسيرة</strong> تتضمن:
+                    <ul>
+                        <li><i class="fas fa-walking"></i> المشي 4 مرات / ممارسة 4 أنشطة يومياً.</li>
+                        <li><i class="fas fa-lawn"></i> مساحة عشب خاصة.</li>
+                        <li><i class="fas fa-camera"></i> تحديثات/صور يومية لأصحاب الكلب.</li>
+                        <li><i class="fas fa-cookie-bite"></i> مكافآت (على النحو المتفق عليه مع صاحب الحيوان).</li>
+                    </ul>
+                    مناسبة للكلاب النشيطة التي تحب الاستكشاف.`,
+                    category: "packages",
+                    tags: ["مسيرة", "مشي", "أنشطة", "صور", "مكافآت"]
+                },
+                {
+                    id: 3,
+                    question: "ما الفرق بين حزمة 'الكلاسيكية' و 'اليوم'؟",
+                    answer: `<strong>الكالبيكية:</strong> 
+                    <ul><li>المشي 3 مرات/ 3 أنشطة يومياً</li><li>حظيرة لعب داخلية</li><li>منطقة استرخاء</li><li>جلسة حلاقة وتنظيم</li></ul>
+                    <strong>حزمة اليوم:</strong> 
+                    <ul><li>المشي مرتين يومياً</li><li>منطقة لعب خارجية</li><li>مسار الرشاقة</li><li>حفر حفرة في الرمل (مسموح!)</li></ul>
+                    حزمة الكالبيكية تركيز أكبر على الحلاقة والاسترخاء، بينما اليوم تركز على اللعب الخارجي والرشاقة.`,
+                    category: "packages",
+                    tags: ["كالبيكية", "حلاقة", "تنظيم", "رشاقة", "حفر"]
+                },
+                {
+                    id: 4,
+                    question: "هل تقدمون حزم مخصصة للإقامات الطويلة؟",
+                    answer: `نعم، بالتأكيد! <br> 
+                    تتوفر حزم مخصصة للإقامات الطويلة أو للكلاب ذات المتطلبات الإضافية. يمكن للعملاء الاتصال بالشركة مباشرة أو الضغط على زر "احجز مخصص" بالأسفل لترتيب حزمة تناسب كلبكم. نقدم خططاً خاصة تشمل عناية إضافية وجولات يومية.`,
+                    category: "services",
+                    tags: ["إقامة طويلة", "مخصص", "الاتصال"]
+                },
+                {
+                    id: 5,
+                    question: "ما هي خدمة 'التنشئة في الغابات'؟",
+                    answer: `التنشئة في الغابات هي نشاط ممتع يُخرج الكلب في بيئة طبيعية آمنة (مساحات خضراء داخل الفندق) تحت إشراف مرشدين متخصصين. يتضمن اللعب بالأغصان، التعرف على الروائح، والتفاعل مع كلاب أخرى. متضمنة في بعض الحزم أو يمكن إضافتها.`,
+                    category: "facility",
+                    tags: ["غابات", "تنشئة", "طبيعة", "أشجار"]
+                },
+                {
+                    id: 6,
+                    question: "هل يمكنني متابعة كلبي عبر كاميرات أو صور أثناء اليوم؟",
+                    answer: `نعم! معظم الحزم (خصوصاً المسيرة والكالبيكية) توفر تحديثات يومية بالصور. كما يمكننا ترتيب مكالمة فيديو سريعة عند الطلب. فقط أبلغنا مسبقاً.`,
+                    category: "services",
+                    tags: ["صور", "كاميرات", "تحديثات", "فيديو"]
+                },
+                {
+                    id: 7,
+                    question: "هل تشمل الحلاقة كلاب السلالات الكبيرة؟",
+                    answer: `نعم، صالة الحلاقة والمنتجع لدينا مجهزة لجميع السلالات. نستخدم منتجات لطيفة ومناسبة لكل نوع فرو. جلسة الحلاقة تشمل قص الأظافر وتنظيف الأذن واستحمام لطيف.`,
+                    category: "services",
+                    tags: ["حلاقة", "سلالات", "كبيرة", "استحمام"]
+                },
+                {
+                    id: 8,
+                    question: "كيف تعمل خدمة المراقبة الليلية؟",
+                    answer: `تتوفر مراقبة الحيوانات الأليفة على مدار 24 ساعة، مع ممرضين متناوبين. نرسل تقريراً صباحياً عن نوم الكلب ونشاطه. جميع الغرف مزودة بكاميرات داخلية للطوارئ.`,
+                    category: "facility",
+                    tags: ["مراقبة", "ليلية", "كاميرات", "أمان"]
+                }
+            ];
+
+            // عناصر DOM
+            const faqListEl = document.getElementById('faqList');
+            const searchInput = document.getElementById('faqSearchInput');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // حالة التصفية الحالية
+            let activeFilter = 'all';
+            let searchQuery = '';
+
+            // دالة تصفية البيانات حسب الكلمات والتصنيف
+            function filterData() {
+                return faqData.filter(item => {
+                    // فلتر حسب الفئة
+                    const matchesFilter = activeFilter === 'all' || item.category === activeFilter;
+                    
+                    // فلتر حسب نص البحث (في السؤال والكلمات المفتاحية)
+                    let matchesSearch = true;
+                    if (searchQuery.trim() !== '') {
+                        const query = searchQuery.trim().toLowerCase();
+                        // بحث في السؤال والإجابة (نص HTML) والtags
+                        const inQuestion = item.question.toLowerCase().includes(query);
+                        const inTags = item.tags.some(tag => tag.includes(query));
+                        // نبحث في النص plain text داخل الإجابة (نزيل الـ html)
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = item.answer;
+                        const answerText = tempDiv.textContent || tempDiv.innerText;
+                        const inAnswer = answerText.toLowerCase().includes(query);
+                        
+                        matchesSearch = inQuestion || inTags || inAnswer;
+                    }
+                    
+                    return matchesFilter && matchesSearch;
+                });
+            }
+
+            // دالة بناء قائمة HTML
+            function renderFAQ() {
+                const filtered = filterData();
+                
+                if (filtered.length === 0) {
+                    faqListEl.innerHTML = `<div class="no-result">
+                        <i class="fas fa-dog"></i><br>
+                        لا توجد أسئلة مطابقة<br><span style="font-size: 0.9rem;">جرب كلمات أخرى أو اختر تصنيفاً مختلفاً</span>
+                    </div>`;
+                    return;
+                }
+
+                let htmlStr = '';
+                filtered.forEach(item => {
+                    // اضافة class active لفتح اول سؤال (اختياري) لكننا سنتركها كلها مقفولة
+                    // يمكن تفعيل auto open اول عنصر اذا حذفنا السطر التالي، لكن نفضل تركها مقفولة
+                    const activeClass = ''; // لا تفتح تلقائياً
+                    htmlStr += `
+                    <div class="faq-item" data-id="${item.id}" data-category="${item.category}">
+                        <div class="faq-question">
+                            <div class="question-content">
+                                <i class="fas fa-paw"></i>
+                                <h3>${item.question}</h3>
+                            </div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                ${item.answer}
+                                <p style="margin-top: 0.8rem; color: #377e3a;"><i class="fas fa-tag"></i> التصنيف: 
+                                    <span class="badge">${item.category === 'facility' ? 'مرافق' : (item.category==='packages'?'الحزم':'خدمات')}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                faqListEl.innerHTML = htmlStr;
+
+                // بعد اضافة HTML نربط حدث النقر لكل عنصر لفتح/غلق السؤال
+                attachToggleEvents();
+            }
+
+            // فتح وغلق الأسئلة عند الضغط
+            function attachToggleEvents() {
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    const questionDiv = item.querySelector('.faq-question');
+                    if (!questionDiv) return;
+
+                    // ازالة أي مستمع سابق (بسيط) - نستبدل بمستمع جديد
+                    questionDiv.replaceWith(questionDiv.cloneNode(true));
+                });
+
+                // نعيد جلب الـ items بعد الاستنساخ
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    const questionDiv = item.querySelector('.faq-question');
+                    questionDiv.addEventListener('click', function(e) {
+                        // نبدل حالة active في العنصر الحالي
+                        const currentlyActive = item.classList.contains('active');
+                        
+                        // (اختياري) إذا أردنا غلق الباقي عند فتح واحد: نزيل active من الجميع ثم نضيف على الحالي اذا لم يكن active
+                        // لكن الأجمل ان يظل مفتوح متعدد. (نطبقه حسب الرغبة)
+                        // سنستخدم نمط "متعدد مفتوح" (كل عنصر يفتح ويغلق مستقل)
+                        
+                        if (currentlyActive) {
+                            item.classList.remove('active');
+                        } else {
+                            item.classList.add('active');
+                        }
+                        
+                        // منع انتشار الحدث
+                        e.stopPropagation();
+                    });
+                });
+            }
+
+            // تحديث النتائج بناء على البحث والفلتر
+            function updateResults() {
+                renderFAQ();
+            }
+
+            // مستمعات البحث
+            searchInput.addEventListener('input', function(e) {
+                searchQuery = e.target.value;
+                updateResults();
+            });
+
+            // مستمعات أزرار التصفية
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // إزالة active من الكل
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    activeFilter = this.getAttribute('data-filter');
+                    updateResults();
+                });
+            });
+
+            // تهيئة أولية
+            renderFAQ();
+
+            // افتح أول عنصر تلقائياً (اختياري) لإظهار التفاعلية
+            // لكننا سنتركها مغلقة. لكن يمكن تفعيل السطر التالي لفتح اول سؤال بعد التحميل
+            // يمكن استخدام setTimeout لضمان وجود العناصر
+            setTimeout(() => {
+                const firstItem = document.querySelector('.faq-item');
+                if (firstItem) firstItem.classList.add('active');
+            }, 100);
+        })();
+    </script>
+</body>
+</html>

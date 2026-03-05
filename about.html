@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>من نحن - لوفينغ هوم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: #14532d;
+            line-height: 1.6;
+        }
+
+        /* الهيدر */
+        .header {
+            background: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(21, 128, 61, 0.3);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        /* بطاقات القسم */
+        .section-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(21, 128, 61, 0.15);
+            border: 1px solid #86efac;
+            transition: transform 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 50px rgba(21, 128, 61, 0.25);
+        }
+
+        .section-title {
+            color: #166534;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 4px solid #4ade80;
+            display: inline-block;
+        }
+
+        .section-subtitle {
+            color: #15803d;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* قائمة المرافق */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .facility-item {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border-right: 6px solid #22c55e;
+            box-shadow: 0 5px 15px rgba(21, 128, 61, 0.1);
+        }
+
+        .facility-item h4 {
+            color: #166534;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .facility-item h4::before {
+            content: "🐾";
+            font-size: 1.5rem;
+        }
+
+        .facility-item ul {
+            list-style: none;
+            padding-right: 1.5rem;
+        }
+
+        .facility-item ul li {
+            margin: 0.8rem 0;
+            position: relative;
+            padding-right: 1.8rem;
+        }
+
+        .facility-item ul li::before {
+            content: "🐕";
+            position: absolute;
+            right: -5px;
+            color: #22c55e;
+            font-size: 1.1rem;
+        }
+
+        /* قسم معلومات الاتصال */
+        .contact-section {
+            background: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-btn {
+            background: white;
+            color: #166534;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: #f0fdf4;
+        }
+
+        /* شارات */
+        .badge {
+            display: inline-block;
+            background-color: #4ade80;
+            color: #14532d;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        /* بطاقة معلومات الاتصال المخفية */
+        #contactSection {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #4ade80;
+            text-align: center;
+        }
+
+        .info-item {
+            font-size: 1.3rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            border-right: 4px solid #22c55e;
+        }
+
+        /* فوتر */
+        .footer {
+            background: #14532d;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* تأثيرات حركية */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-section {
+                padding: 2rem;
+            }
+        }
+        /* زر العودة للصفحة الرئيسية */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-button-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #1e5e2c, #0f401d);
+      padding: 14px 28px 14px 22px;
+      border-radius: 80px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      border: 2px solid #d4f2c7;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      animation: subtle-pulse 2.5s infinite ease-in-out;
+    }
+
+    .dog-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9e05e;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .dog-icon-wrapper i {
+      font-size: 2.4rem;
+      color: #4a2f0d;
+      transform: scaleX(-1);
+      filter: drop-shadow(2px 2px 0 #a56711);
+    }
+
+    .dog-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 80% 0 40% 40%;
+      transform: rotate(-15deg);
+      box-shadow: -2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .dog-icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 0 80% 40% 40%;
+      transform: rotate(15deg);
+      box-shadow: 2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .home-button-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .home-button-text span:first-child {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .home-button-text span:last-child {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 0 #0d3d19;
+    }
+
+    .home-button-link:hover {
+      transform: scale(1.08) translateY(-5px);
+      background: linear-gradient(145deg, #2b803e, #1a5c2a);
+      box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+      gap: 18px;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper {
+      transform: rotate(5deg) scale(1.05);
+      background: #ffe070;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper i {
+      animation: bark 0.4s ease;
+    }
+
+    @keyframes bark {
+      0%, 100% {
+        transform: scaleX(-1) scale(1);
+      }
+      50% {
+        transform: scaleX(-1) scale(1.2);
+      }
+    }
+
+    @keyframes subtle-pulse {
+      0%, 100% {
+        box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2);
+      }
+      50% {
+        box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+      }
+      .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+      .dog-icon-wrapper i {
+        font-size: 2rem;
+      }
+      .home-button-text span:last-child {
+        font-size: 1.2rem;
+      }
+    }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <div class="header">
+        <h1>🏡 لوفينغ هوم</h1>
+        <p>فندق الكلاب الفاخر في هونج كونج - حيث الرعاية والرفاهية لحيوانك الأليف</p>
+    </div>
+
+    <div class="container">
+        <!-- بطاقة التعريف -->
+        <div class="section-card animate">
+            <h2 class="section-title">من نحن</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8;">
+                في <strong>لوفينغ هوم</strong>، نؤمن أن كل كلب يستحق أفضل رعاية واهتمام. 
+                يقع فندقنا الفاخر في هونج كونج، ونحن متخصصون في توفير بيئة آمنة ومريحة 
+                للكلاب مع مجموعة متكاملة من الخدمات والمرافق. مع تزايد الطلب على خدماتنا، 
+                نحرص دائماً على تطوير مرافقنا وتقديم أفضل التجارب لضيوفنا من الكلاب وأصحابهم.
+            </p>
+        </div>
+
+        <!-- بطاقة المرافق المقدمة -->
+        <div class="section-card animate" style="animation-delay: 0.2s;">
+            <h2 class="section-title">🌟 المرافق المقدمة</h2>
+            
+            <div class="facilities-grid">
+                <!-- العمود الأول -->
+                <div class="facility-item">
+                    <h4>الخدمات الرئيسية</h4>
+                    <ul>
+                        <li>صالة للحلاقة ومنتجع</li>
+                        <li>غرف مزودة بتدفئة/تبريد تحت الأرضية وتلفزيون</li>
+                        <li>خدمة التوصيل "من وإلى المكان"</li>
+                        <li>مراعي خارجية آمنة</li>
+                        <li>خدمات بيطرية متاحة على مدار 24 ساعة</li>
+                    </ul>
+                </div>
+
+                <!-- العمود الثاني -->
+                <div class="facility-item">
+                    <h4>مرافق إضافية</h4>
+                    <ul>
+                        <li>مراقبة الحيوانات الأليفة على مدار الساعة</li>
+                        <li>التنشئة في الغابات القريبة</li>
+                        <li>مساحة عشب خاصة للعب</li>
+                        <li>حظيرة لعب داخلية مجهزة</li>
+                        <li>مسار للرشاقة والتدريب</li>
+                    </ul>
+                </div>
+
+                <!-- العمود الثالث -->
+                <div class="facility-item">
+                    <h4>مميزات خاصة</h4>
+                    <ul>
+                        <li>كاميرات مراقبة مباشرة للمالكين</li>
+                        <li>تحديثات يومية بالصور والفيديوهات</li>
+                        <li>طعام صحي ومتوازن</li>
+                        <li>جلسات تدريب احترافية</li>
+                        <li>منطقة استرخاء مخصصة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم التواصل -->
+        <div class="contact-section">
+            <h3>📞 تواصل معنا</h3>
+            <p>
+                للمزيد من المعلومات حول خدماتنا أو للاستفسار عن الإقامة، لا تتردد في التواصل معنا. 
+                فريقنا متواجد دائماً للإجابة على استفساراتكم.
+            </p>
+            <button class="contact-btn" onclick="showContact()">عرض معلومات الاتصال</button>
+        </div>
+
+        <!-- بطاقة معلومات الاتصال المخفية -->
+        <div class="section-card" id="contactSection" style="display: none;">
+            <h2 class="section-title">📱 معلومات الاتصال</h2>
+            <div style="padding: 1rem;">
+                <div class="info-item">
+                    <strong>📞 الهاتف:</strong> +852 XXXX XXXX
+                </div>
+                <div class="info-item">
+                    <strong>✉️ البريد الإلكتروني:</strong> info@lovinghome.hk
+                </div>
+                <div class="info-item">
+                    <strong>📍 العنوان:</strong> هونج كونج - المنطقة المركزية
+                </div>
+                <div class="info-item">
+                    <strong>⏰ ساعات العمل:</strong> 24 ساعة طوال أيام الأسبوع
+                </div>
+                <p style="font-size: 1.1rem; margin: 2rem 0; color: #166534;">نحن متواجدون دائماً لخدمتكم</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- فوتر -->
+    <div class="footer">
+        <p>© 2026 لوفينغ هوم - جميع الحقوق محفوظة</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">فندق الكلاب الفاخر في هونج كونج - حيث الرعاية تلتقي بالرفاهية</p>
+    </div>
+
+    <script>
+        // دالة إظهار معلومات الاتصال
+        function showContact() {
+            const contactSection = document.getElementById('contactSection');
+            if (contactSection.style.display === 'none' || contactSection.style.display === '') {
+                contactSection.style.display = 'block';
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                contactSection.style.display = 'none';
+            }
+        }
+
+        // إضافة تأثير ظهور تدريجي للعناصر عند التمرير
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.section-card');
+            cards.forEach(card => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // التحقق من دعم المتصفح
+        console.log('مرحباً بكم في لوفينغ هوم');
+    </script>
+    <div class="home-button">
+    <a href="index.html" class="home-button-link">
+        <div class="dog-icon-wrapper">
+            <i class="fas fa-dog"></i>
+        </div>
+        <div class="home-button-text">
+            <span>العودة إلى</span>
+            <span>الرئيسية</span>
+        </div>
+    </a>
+</div>
+<div class="home-button">
+    <a href="index2.html" class="home-button-link">
+      <div class="dog-icon-wrapper">
+        <i class="fas fa-dog"></i>
+      </div>
+      <div class="home-button-text">
+        <span>العودة إلى</span>
+        <span>الرئيسية</span>
+      </div>
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+  <title>استوديو الصور</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color: #1b5e20;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #1b5e20, #2e7d32);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .studio-section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .studio-section h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .studio-section p {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+      color: #2e7d32;
+    }
+
+    .slider {
+      width: 90%;
+      max-width: 1000px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .slides {
+      display: flex;
+      transition: 0.6s;
+      direction: ltr;
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .overlay h3 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .overlay button {
+      background: #a5d6a7;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #1b5e20;
+      font-weight: bold;
+    }
+
+    .overlay button:hover {
+      background: #6d4c41;
+      color: white;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .left {
+      left: 15px;
+    }
+
+    .right {
+      right: 15px;
+    }
+
+    .dots {
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: #81c784;
+      display: inline-block;
+      border-radius: 50%;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .active {
+      background: #1b5e20;
+    }
+
+    @media (max-width: 700px) {
+      .slide img {
+        height: 300px;
+      }
+    }
+
+    /* زر العودة للصفحة الرئيسية */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-button-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #1e5e2c, #0f401d);
+      padding: 14px 28px 14px 22px;
+      border-radius: 80px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.3);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      border: 2px solid #d4f2c7;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      animation: subtle-pulse 2.5s infinite ease-in-out;
+    }
+
+    .dog-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9e05e;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 4px 0 #a56b1a, 0 0 0 4px #ffcf4a;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .dog-icon-wrapper i {
+      font-size: 2.4rem;
+      color: #4a2f0d;
+      transform: scaleX(-1);
+      filter: drop-shadow(2px 2px 0 #a56711);
+    }
+
+    .dog-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 80% 0 40% 40%;
+      transform: rotate(-15deg);
+      box-shadow: -2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .dog-icon-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -2px;
+      width: 16px;
+      height: 16px;
+      background: #f9e05e;
+      border-radius: 0 80% 40% 40%;
+      transform: rotate(15deg);
+      box-shadow: 2px -2px 0 #a56b1a;
+      border: 2px solid #a56b1a;
+    }
+
+    .home-button-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .home-button-text span:first-child {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .home-button-text span:last-child {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 0 #0d3d19;
+    }
+
+    .home-button-link:hover {
+      transform: scale(1.08) translateY(-5px);
+      background: linear-gradient(145deg, #2b803e, #1a5c2a);
+      box-shadow: 0 18px 30px rgba(0, 30, 0, 0.6), 0 0 0 4px #b2f09b, 0 0 0 8px rgba(100, 200, 70, 0.3);
+      gap: 18px;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper {
+      transform: rotate(5deg) scale(1.05);
+      background: #ffe070;
+    }
+
+    .home-button-link:hover .dog-icon-wrapper i {
+      animation: bark 0.4s ease;
+    }
+
+    @keyframes bark {
+      0%, 100% {
+        transform: scaleX(-1) scale(1);
+      }
+      50% {
+        transform: scaleX(-1) scale(1.2);
+      }
+    }
+
+    @keyframes subtle-pulse {
+      0%, 100% {
+        box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5), 0 0 0 3px #9ed18b, 0 0 0 6px rgba(120, 200, 100, 0.2);
+      }
+      50% {
+        box-shadow: 0 10px 30px rgba(0, 70, 0, 0.7), 0 0 0 4px #afe89b, 0 0 0 9px rgba(80, 180, 60, 0.3);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-button-link {
+        padding: 10px 20px 10px 16px;
+        font-size: 1rem;
+      }
+      .dog-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+      .dog-icon-wrapper i {
+        font-size: 2rem;
+      }
+      .home-button-text span:last-child {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">استوديو لوفينج هومز</div>
+
+  <section class="studio-section">
+    <h2>في لوفينج هوم تجد الراحة والرفاهية لكلبك</h2>
+    <p>
+      نوفر لك جلسات داخلية لكلبك<br>
+      مساحات عشبية خضراء <br>
+      مراقبة الحيوانات الأليفة<br>
+      خدمات بيطرية متاحة على مدار 24 ساعة <br>
+      نوفر جلسات تصوير احترافية داخل فندق الكلاب باستخدام أحدث الكاميرات.
+    </p>
+
+    <div class="slider">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="../images/1.png" alt="صورة 1"></div>
+        <div class="slide"><img src="../images/2.png" alt="صورة 2"></div>
+        <div class="slide"><img src="../images/3.png" alt="صورة 3"></div>
+        <div class="slide"><img src="../images/4.jpg" alt="صورة 4"></div>
+        <div class="slide"><img src="../images/5.jpg" alt="صورة 5"></div>
+        <div class="slide"><img src="../images/11.jpg" alt="صورة 11"></div>
+        <div class="slide"><img src="../images/100.jpg" alt="صورة 100"></div>
+        <div class="slide"><img src="../images/6.jpg" alt="صورة 6"></div>
+        <div class="slide"><img src="../images/7.jpg" alt="صورة 7"></div>
+        <div class="slide"><img src="../images/8.jpg" alt="صورة 8"></div>
+        <div class="slide"><img src="../images/9.jpg" alt="صورة 9"></div>
+        <div class="slide"><img src="../images/gym1.jpg" alt="صورة 12"></div>
+      </div>
+
+      <span class="arrow left" onclick="prevSlide()">❮</span>
+      <span class="arrow right" onclick="nextSlide()">❯</span>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <div class="home-button">
+    <a href="index2.html" class="home-button-link">
+      <div class="dog-icon-wrapper">
+        <i class="fas fa-dog"></i>
+      </div>
+      <div class="home-button-text">
+        <span>العودة إلى</span>
+        <span>الرئيسية</span>
+      </div>
+    </a>
+  </div>
+
+  <script>
+    let index = 0;
+    const slides = document.getElementById("slides");
+    const total = slides.children.length;
+    const dotsContainer = document.getElementById("dots");
+
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement("span");
+      d.classList.add("dot");
+      if (i === 0) d.classList.add("active");
+      d.onclick = (function (i) {
+        return function () {
+          showSlide(i);
+        };
+      })(i);
+      dotsContainer.appendChild(d);
+    }
+
+    function updateDots() {
+      document.querySelectorAll(".dot").forEach((d, i) => {
+        d.classList.toggle("active", i === index);
+      });
+    }
+
+    function showSlide(i) {
+      index = i;
+      slides.style.transform = `translateX(${index * -100}%)`;
+      updateDots();
+    }
+
+    function nextSlide() {
+      index = (index + 1) % total;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + total) % total;
+      showSlide(index);
+    }
+
+    setInterval(nextSlide, 4000);
+  </script>
+</body>
+
+</html>
