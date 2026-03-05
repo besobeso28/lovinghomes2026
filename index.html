@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>home page</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    
+  </head>
+  <body>
+    <div class="top">
+      <img src="../images/logo.jpeg" alt="شعار" height="85px" width="85px" />
+      <h1 id="title">the loving home hotle</h1>
+    </div>
+    
+    <div class="zoom-buttons">
+      <button onclick="zoomIn()">A+</button>
+      <button onclick="zoomOut()">A-</button>
+    </div>
+    
+    <button onclick="toggleMode()" id="modeBtn">🌙 الوضع الليلي</button>
+    <button id="langBtn" onclick="toggleLang()">🇬🇧 English</button>
+
+    <p id="desc">
+      في لوفينج هوم نفتح أبوابنا لعالمٍ مليء بالحب والاهتمام، حيث يجد حيوانك الأليف مكاناً يشعر فيه بالدفء والأمان وكأنه في منزله الحقيقي. نحرص على تقديم تجربة استثنائية تجمع بين الراحة والترفيه والرعاية المتخصصة، من غرف إقامة مريحة ومجهزة بأحدث التقنيات، إلى صالة حلاقة وعناية احترافية، ومناطق لعب داخلية وخارجية آمنة تمنح حيوانك الحرية والمرح. كما يرافق هذه التجربة فريق شغوف وخدمات بيطرية متوفرة على مدار الساعة، لأننا نؤمن أن كل حيوان أليف يستحق عناية مميزة واهتماماً خاصاً. في لوفينج هوم، نعدك بأن يبقى صديقك المفضل سعيداً، مطمئناً، ومحبوباً في كل لحظة.
+    </p>
+    
+    <div>
+      <button class="read-button" onclick="readParagraph()" id="readBtn">
+        <span>🔊</span> استمع للنص
+      </button>
+      <button class="read-button stop-button" onclick="stopReading()" id="stopBtn" style="display: none;">
+        <span>⏹️</span> إيقاف
+      </button>
+    </div>
+
+   <div class="nav-buttons">
+  <button id="btnCustomers" onclick="document.location='custmers.html'">حجز اون لاين</button> 
+  <button id="btnonline" onclick="document.location='evaluation.html'">تقييمات العملاء الاعزاء</button>
+  <button id="btnoffers" onclick="document.location='offers.html'">الحزم والأسعار</button>
+  <button id="btnhelp" onclick="document.location='help.html'">مساعدة</button> 
+  <button id="btnImages" onclick="document.location='gallary.html'">الصور (Gallery)</button>  
+  <button id="btnmanag" onclick="document.location='managment.html'">الادارة</button>
+  <button id="btnabout" onclick="document.location='about.html'">من نحن (About Us)</button>
+  <button id="btservices" onclick="document.location='services.html'">الخدمات (Services)</button>
+  <button id="btsactivites" onclick="document.location='activites.html'">الأنشطة والبرامج (Activities)</button>
+</div>
+
+    <div class="slider">
+      <img src="../images/1.png" class="slide active" />
+      <img src="../images/2.png" class="slide" />
+      <img src="../images/3.png" class="slide" />
+
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
+    </div>
+
+    <script>
+      // ===== تعريف المتغيرات العامة =====
+      let currentUtterance = null;
+      let isSpeaking = false;
+      let index = 0;
+      let zoomLevel = 1;
+      let isArabic = true;
+            const minZoom = 0.7;
+      const maxZoom = 1.6;
+      const slides = document.querySelectorAll(".slide");
+
+      // ===== S L I D E R =====
+      function showSlide(i) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[i].classList.add("active");
+      }
+
+      function nextSlide() { 
+        index = (index + 1) % slides.length; 
+        showSlide(index); 
+      }
+
+      function prevSlide() { 
+        index = (index - 1 + slides.length) % slides.length; 
+        showSlide(index); 
+      }
+
+      setInterval(nextSlide, 3000);
+
+      // ===== DARK MODE =====
+      function toggleMode() {
+        document.body.classList.toggle("dark-mode");
+        const btn = document.getElementById("modeBtn");
+        btn.textContent = document.body.classList.contains("dark-mode") 
+          ? "☀️ الوضع النهاري" 
+          : "🌙 الوضع الليلي";
+      }
+
+      // ===== FONT ZOOM =====
+      function zoomIn() {
+        if (zoomLevel < maxZoom) {
+          zoomLevel += 0.1;
+          document.body.style.transform = `scale(${zoomLevel})`;
+          document.body.style.transformOrigin = "top right";
+        }
+      }
+
+      function zoomOut() {
+        if (zoomLevel > minZoom) {
+          zoomLevel -= 0.1;
+          document.body.style.transform = `scale(${zoomLevel})`;
+          document.body.style.transformOrigin = "top right";
+        }
+      }
+
+      // ===== LANGUAGE SWITCH =====
+            function toggleLang() {
+        if (isArabic) {
+          // التحويل إلى الإنجليزية
+          document.documentElement.lang = "en";
+          document.body.dir = "ltr";
+
+          document.getElementById("title").innerText = "The Loving Home Hotel";
+          document.getElementById("desc").innerText = "At Loving Home, we open our doors to a world full of love and care, where your pet finds warmth and safety as if it were in its real home. We provide an exceptional experience that combines comfort, entertainment, and professional care, including comfortable rooms, grooming and care lounge, and safe indoor & outdoor play areas.";
+
+          document.getElementById("btnCustomers").innerText = "Customers (Testimonials)";
+          document.getElementById("btnonline").innerText = "Online Booking";
+          document.getElementById("btnoffers").innerText = "Packages & Pricing";
+          document.getElementById("btnhelp").innerText = "Help";
+          document.getElementById("btnImages").innerText = "Gallery";
+          document.getElementById("btnmanag").innerText = "Management";
+          document.getElementById("btnabout").innerText = "About Us";
+          document.getElementById("btservices").innerText = "Services";
+          document.getElementById("btsactivites").innerText = "Activities";
+
+          document.getElementById("langBtn").innerText = "🇸🇦 العربية";
+          
+          // تغيير نص زر القراءة
+          document.getElementById("readBtn").innerHTML = '<span>🔊</span> Listen to text';
+
+        } else {
+          // العودة إلى العربية
+          document.documentElement.lang = "ar";
+          document.body.dir = "rtl";
+
+          document.getElementById("title").innerText = "the loving home hotel";
+          document.getElementById("desc").innerText ="في لوفينج هوم نفتح أبوابنا لعالمٍ مليء بالحب والاهتمام، حيث يجد حيوانك الأليف مكاناً يشعر فيه بالدفء والأمان وكأنه في منزله الحقيقي. نحرص على تقديم تجربة استثنائية تجمع بين الراحة والترفيه والرعاية المتخصصة، من غرف إقامة مريحة ومجهزة بأحدث التقنيات، إلى صالة حلاقة وعناية احترافية، ومناطق لعب داخلية وخارجية آمنة تمنح حيوانك الحرية والمرح. كما يرافق هذه التجربة فريق شغوف وخدمات بيطرية متوفرة على مدار الساعة، لأننا نؤمن أن كل حيوان أليف يستحق عناية مميزة واهتماماً خاصاً. في لوفينج هوم، نعدك بأن يبقى صديقك المفضل سعيداً، مطمئناً، ومحبوباً في كل لحظة ";
+          document.getElementById("btnCustomers").innerText = "العملاء (Testimonials)";
+          document.getElementById("btnonline").innerText = "حجز اون لاين";
+          document.getElementById("btnoffers").innerText = "الحزم والأسعار";
+          document.getElementById("btnhelp").innerText = "مساعدة";
+          document.getElementById("btnImages").innerText = "الصور (Gallery)";
+          document.getElementById("btnmanag").innerText = "الادارة";
+          document.getElementById("btnabout").innerText = "الفندق (About Us)";
+          document.getElementById("btservices").innerText = "الخدمات (Services)";
+          document.getElementById("btsactivites").innerText = "الأنشطة والبرامج (Activities)";
+
+          document.getElementById("langBtn").innerText = "🇬🇧 English";
+          
+          // تغيير نص زر القراءة
+          document.getElementById("readBtn").innerHTML = '<span>🔊</span> استمع للنص';
+        }
+
+        isArabic = !isArabic;
+      }
+
+      // ===== وظائف تحويل النص إلى صوت =====
+      
+      // دالة قراءة الفقرة - المعدلة
+      function readParagraph() {
+        // الحصول على نص الفقرة
+        const paragraph = document.getElementById("desc");
+        
+        if (!paragraph) {
+          alert("لم يتم العثور على النص!");
+          return;
+        }
+        
+        const text = paragraph.innerText;
+        
+        if (!text || text.trim() === "") {
+          alert("النص فارغ!");
+          return;
+        }
+        
+        // التحقق من دعم المتصفح
+        if (!('speechSynthesis' in window)) {
+          alert('عذراً، متصفحك لا يدعم خاصية تحويل النص إلى صوت');
+          return;
+        }
+        
+        // إيقاف أي قراءة حالية
+        stopReading();
+        
+        // تحديد اللغة المناسبة
+        const lang = isArabic ? 'ar-SA' : 'en-US';
+        
+        // إنشاء كائن القراءة
+        currentUtterance = new SpeechSynthesisUtterance(text);
+        currentUtterance.lang = lang;
+        currentUtterance.rate = 1;
+        currentUtterance.pitch = 1;
+        currentUtterance.volume = 1;
+        
+        // أحداث القراءة
+        currentUtterance.onstart = function() {
+          isSpeaking = true;
+          document.getElementById('readBtn').classList.add('speaking');
+          document.getElementById('stopBtn').style.display = 'inline-flex';
+          console.log('بدأت القراءة');
+        };
+        
+        currentUtterance.onend = function() {
+          resetReadingState();
+          console.log('انتهت القراءة');
+        };
+        
+        currentUtterance.onerror = function(event) {
+          console.error('خطأ في القراءة:', event.error);
+          resetReadingState();
+          if (event.error !== 'canceled') {
+            alert('حدث خطأ في تشغيل الصوت');
+          }
+        };
+        
+        // تشغيل الصوت
+        try {
+          window.speechSynthesis.speak(currentUtterance);
+        } catch (error) {
+          console.error('خطأ في تشغيل الصوت:', error);
+          alert('حدث خطأ في تشغيل الصوت');
+        }
+      }
+      
+      // دالة إيقاف القراءة
+      function stopReading() {
+        if (window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+        }
+        resetReadingState();
+      }
+      
+      // دالة إعادة تعيين حالة القراءة
+      function resetReadingState() {
+        isSpeaking = false;
+        currentUtterance = null;
+        document.getElementById('readBtn').classList.remove('speaking');
+        document.getElementById('stopBtn').style.display = 'none';
+      }
+      
+      // دالة إضافية: قراءة النص بسرعة مختلفة
+      function readWithSpeed(speed) {
+        if (currentUtterance) {
+          currentUtterance.rate = speed;
+        }
+      }
+      
+      // التحقق من دعم المتصفح عند تحميل الصفحة
+      window.onload = function() {
+        if (!('speechSynthesis' in window)) {
+          const readBtn = document.getElementById('readBtn');
+          readBtn.disabled = true;
+          readBtn.style.opacity = '0.5';
+          readBtn.style.cursor = 'not-allowed';
+          readBtn.title = 'المتصفح لا يدعم هذه الخاصية';
+        }
+      };
+    </script>
+  </body>
+</html>
